@@ -1,0 +1,19 @@
+name: Deploy with Docker Compose
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Stop Existing Containers
+        run: docker-compose down || true
+
+      - name: Build and Start Containers
+        run: docker-compose up --build -d
